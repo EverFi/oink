@@ -1,4 +1,5 @@
 require 'optparse'
+$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..')))
 require 'oink/reports/base'
 require 'oink/reports/active_record_instantiation_report'
 require 'oink/reports/memory_usage_report'
