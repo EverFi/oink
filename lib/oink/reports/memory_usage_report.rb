@@ -7,17 +7,25 @@ module Oink
   module Reports
     class MemoryUsageReport < Base
       def print(output)
-        output.puts "---- MEMORY THRESHOLD ----"
+        output.puts "---- MEMORY THRESHOLD MOTHERFUCKER ----"
         output.puts "THRESHOLD: #{@threshold/1024} MB\n"
 
         output.puts "\n-- REQUESTS --\n" if @format == :verbose
 
         @inputs.each do |input|
           input.each_line do |line|
-            line = line.strip
+            begin
+              line = line.strip
+            rescue ArgumentError
+              next
+            end
 
-             # Skip this line since we're only interested in the Hodel 3000 compliant lines
-            next unless line =~ HODEL_LOG_FORMAT_REGEX
+            begin
+               # Skip this line since we're only interested in the Hodel 3000 compliant lines
+              next unless line =~ HODEL_LOG_FORMAT_REGEX
+            rescue ArgumentError
+              next
+            end
 
             if line =~ /app\[(.+)\]/
               pid = $1
